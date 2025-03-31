@@ -26,8 +26,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-terraform-
 
-    - name: Set up Azure credentials
-      uses: azure/setup-azurecli@v1
+    - name: Set up Azure CLI
+      uses: azure/setup-azurecli@v2  # Updated to v2
       with:
         azure-cli-version: '2.31.0'  # Specify the Azure CLI version
       env:
