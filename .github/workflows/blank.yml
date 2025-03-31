@@ -19,7 +19,7 @@ jobs:
         terraform_version: 1.3.0  # Set the version you are using (or the latest)
 
     - name: Cache Terraform providers
-      uses: actions/cache@v2
+      uses: actions/cache@v3  # Updated to v3
       with:
         path: ~/.terraform.d/plugins
         key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
@@ -33,4 +33,13 @@ jobs:
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_SECRET: ${{ secrets.AZURE_SECRET }}
-        AZURE_TENANT_ID:
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: Initialize Terraform
+      run: terraform init
+
+    - name: Validate Terraform configuration
+      run: terraform validate
+
+    - name: Apply Terraform configuration
+      run: terraform apply -auto-approve
